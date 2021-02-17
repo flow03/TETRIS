@@ -7,20 +7,20 @@
 class Shape 
 {
 public:
-	//меняет положение фигуры
+	//РјРµРЅВ¤РµС‚ РїРѕР»РѕР¶РµРЅРёРµ С„РёРіСѓСЂС‹
 	virtual void changePosition(BaseApp &base) = 0;
-	//Рисует фигуру указанным символом по её фактическим координатам
+	//вЂ“РёСЃСѓРµС‚ С„РёРіСѓСЂСѓ СѓРєР°Р·Р°РЅРЅС‹Рј СЃРёРјРІРѕР»РѕРј РїРѕ РµР„ С„Р°РєС‚РёС‡РµСЃРєРёРј РєРѕРѕСЂРґРёРЅР°С‚Р°Рј
 	void SetShape(BaseApp &base, wchar_t symbol);
-	//Рисует фигуру указанным символом в указанной точке
+	//вЂ“РёСЃСѓРµС‚ С„РёРіСѓСЂСѓ СѓРєР°Р·Р°РЅРЅС‹Рј СЃРёРјРІРѕР»РѕРј РІ СѓРєР°Р·Р°РЅРЅРѕР№ С‚РѕС‡РєРµ
 	void SetShape(BaseApp &base, wchar_t symbol, COORD c_);
-	//проверяет новую позицию на пустые символы
+	//РїСЂРѕРІРµСЂВ¤РµС‚ РЅРѕРІСѓСЋ РїРѕР·РёС†РёСЋ РЅР° РїСѓСЃС‚С‹Рµ СЃРёРјРІРѕР»С‹
 	bool checkPosition(COORD new_a, COORD new_b, COORD new_c, COORD new_d, BaseApp &base) const;
-	//проверяет текущую позицию 
+	//РїСЂРѕРІРµСЂВ¤РµС‚ С‚РµРєСѓС‰СѓСЋ РїРѕР·РёС†РёСЋ 
 	bool checkPosition(BaseApp &base) const;
 
 	void moveLeft(BaseApp &base);
 	void moveRight(BaseApp &base);
-	bool moveDown(BaseApp &base); // возвращает bool
+	bool moveDown(BaseApp &base); // РІРѕР·РІСЂР°С‰Р°РµС‚ bool
 	void moveUp(BaseApp &base);
 
 protected:

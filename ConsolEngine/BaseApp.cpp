@@ -7,7 +7,7 @@
 
 #define MY_PERFORMENCE_COUNTER
 
-typedef BOOL(WINAPI *SETCONSOLEFONT)(HANDLE, DWORD);     
+typedef BOOL(WINAPI *SETCONSOLEFONT)(HANDLE, DWORD); 
 SETCONSOLEFONT SetConsoleFont;
 
 #include "PerformanceCounter.h"
@@ -22,14 +22,14 @@ BaseApp::BaseApp(int xSize, int ySize) : X_SIZE(xSize), Y_SIZE(ySize)
 	mConsole = GetStdHandle(STD_OUTPUT_HANDLE); //STD_OUTPUT_HANDLE
 	mConsoleIn = GetStdHandle(STD_INPUT_HANDLE);
 
-	//Шрифт
+	//РЁСЂРёС„С‚
 	//HMODULE hmod = GetModuleHandleA("KERNEL32.DLL");    
 	//SetConsoleFont = (SETCONSOLEFONT)GetProcAddress(hmod, "SetConsoleFont");   
 	////if (!SetConsoleFont) { std::cout << "error\n"; exit(1); }  
 	//SetConsoleFont(mConsole, 8);
 	
 
-	//Размер шрифта
+	//Р Р°Р·РјРµСЂ С€СЂРёС„С‚Р°
 	CONSOLE_FONT_INFOEX fontInfo;
 	fontInfo.cbSize = sizeof(fontInfo);
 	GetCurrentConsoleFontEx(mConsole, TRUE, &fontInfo);
@@ -42,12 +42,12 @@ BaseApp::BaseApp(int xSize, int ySize) : X_SIZE(xSize), Y_SIZE(ySize)
 	SetCurrentConsoleFontEx(mConsole, TRUE, &fontInfo);
 	
 
-	//Сначала задаём минимальные значения буфера
+	//РЎРЅР°С‡Р°Р»Р° Р·Р°РґР°С‘Рј РјРёРЅРёРјР°Р»СЊРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ Р±СѓС„РµСЂР°
 	SMALL_RECT zeroWindow = { 0, 0, 0, 0 };
 	SetConsoleWindowInfo(mConsole, TRUE, &zeroWindow);
 	SetConsoleScreenBufferSize(mConsole, COORD{ 1, 1 });
 
-	//А уже потом изменяем значения на нужные нам
+	//Рђ СѓР¶Рµ РїРѕС‚РѕРј РёР·РјРµРЅСЏРµРј Р·РЅР°С‡РµРЅРёСЏ РЅР° РЅСѓР¶РЅС‹Рµ РЅР°Рј
 	if(!SetConsoleScreenBufferSize(mConsole,  windowBufSize))
 	{
 		std::cout << "SetConsoleScreenBufferSize failed with error " << GetLastError() << std::endl;
@@ -67,15 +67,15 @@ BaseApp::BaseApp(int xSize, int ySize) : X_SIZE(xSize), Y_SIZE(ySize)
 	mChiBuffer = (CHAR_INFO*)malloc((X_SIZE+1)*(Y_SIZE+1)*sizeof(CHAR_INFO));
 
 	mDwBufferSize.X = X_SIZE + 1;
-	mDwBufferSize.Y = Y_SIZE + 1;		// размер буфера данных
+	mDwBufferSize.Y = Y_SIZE + 1;		// СЂР°Р·РјРµСЂ Р±СѓС„РµСЂР° РґР°РЅРЅС‹С…
 
 	mDwBufferCoord.X = 0;
-	mDwBufferCoord.Y = 0;				// координаты ячейки
+	mDwBufferCoord.Y = 0;				// РєРѕРѕСЂРґРёРЅР°С‚С‹ СЏС‡РµР№РєРё
 
 	mLpWriteRegion.Left = 0;
 	mLpWriteRegion.Top = 0;
 	mLpWriteRegion.Right = X_SIZE;  //X_SIZE + 1, Y_SIZE + 1
-	mLpWriteRegion.Bottom = Y_SIZE;	// прямоугольник для чтения
+	mLpWriteRegion.Bottom = Y_SIZE;	// РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРє РґР»СЏ С‡С‚РµРЅРёСЏ
 
 
 	for (int x = 0; x < X_SIZE + 1; ++x)
@@ -113,7 +113,7 @@ BaseApp::BaseApp(int xSize, int ySize) : X_SIZE(xSize), Y_SIZE(ySize)
 	{u, u , u , u , u , u , u , u , u , u , u , u , u , u , u , u , u , u , u , u , u , u , u , u , u , u , u , u}
 	};
 
-	//вывод игрового поля
+	//РІС‹РІРѕРґ РёРіСЂРѕРІРѕРіРѕ РїРѕР»СЏ
 	for (int x = 0; x < screenBuffer.size(); ++x)
 		for (int y = 0; y < screenBuffer[x].size(); ++y)
 		{
@@ -180,7 +180,7 @@ void BaseApp::Run()
 	int currentKey = 0;
 
 	__int64 deltaTime = 0;
-	//главный цикл игры
+	//РіР»Р°РІРЅС‹Р№ С†РёРєР» РёРіСЂС‹
 	while (isGameActive)
 	{
 		timer.Start();
@@ -225,7 +225,7 @@ void BaseApp::Run()
 	for (auto it = screenBuffer.begin(); it != screenBuffer.end(); ++it)
 		*it = new_row;
 
-	//вывод игрового поля
+	//РІС‹РІРѕРґ РёРіСЂРѕРІРѕРіРѕ РїРѕР»СЏ
 	for (int x = 0; x < screenBuffer.size(); ++x)
 		for (int y = 0; y < screenBuffer[x].size(); ++y)
 			SetChar(y, x, screenBuffer[x][y]);
