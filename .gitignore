@@ -259,3 +259,12 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+
+# .vscode settings files
+# *.json
+
+# Executable files
+*.exe
+
+# C++ object files
+*.o

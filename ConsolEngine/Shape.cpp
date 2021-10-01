@@ -2,6 +2,9 @@
 
 //-------------Shape-----------------
 
+short one = 1;
+short two = 2;
+
 void Shape::SetShape(BaseApp &base, wchar_t symbol) {
 	base.SetChar(a.X, a.Y, symbol);
 	base.SetChar(b.X, b.Y, symbol);
@@ -33,44 +36,44 @@ bool Shape::checkPosition(BaseApp &base) const {
 void Shape::moveLeft(BaseApp &base) {
 	SetShape(base, L' ');
 	if (checkPosition(
-		COORD{ a.X - 1, a.Y }, 
-		COORD{ b.X - 1, b.Y }, 
-		COORD{ c.X - 1, c.Y },
-		COORD{ d.X - 1, d.Y },
+		COORD{ a.X - one, a.Y }, 
+		COORD{ b.X - one, b.Y }, 
+		COORD{ c.X - one, c.Y },
+		COORD{ d.X - one, d.Y },
 		base))
 	{
-		a.X -= 1;
-		b.X -= 1;
-		c.X -= 1;
-		d.X -= 1;
+		a.X -= one;
+		b.X -= one;
+		c.X -= one;
+		d.X -= one;
 	}
 }
 
 void Shape::moveRight(BaseApp &base) {
 	SetShape(base, L' ');
-	if ((base.GetChar(a.X + 1, a.Y) == L' ') &&
-		(base.GetChar(b.X + 1, b.Y) == L' ') &&
-		(base.GetChar(c.X + 1, c.Y) == L' ') &&
-		(base.GetChar(d.X + 1, d.Y) == L' '))
+	if ((base.GetChar(a.X + one, a.Y) == L' ') &&
+		(base.GetChar(b.X + one, b.Y) == L' ') &&
+		(base.GetChar(c.X + one, c.Y) == L' ') &&
+		(base.GetChar(d.X + one, d.Y) == L' '))
 	{
-		a.X += 1;
-		b.X += 1;
-		c.X += 1;
-		d.X += 1;
+		a.X += one;
+		b.X += one;
+		c.X += one;
+		d.X += one;
 	}
 }
 
 bool Shape::moveDown(BaseApp &base) {
 	SetShape(base, L' ');
-	if ((base.GetChar(a.X, a.Y + 1) == L' ') &&
-		(base.GetChar(b.X, b.Y + 1) == L' ') &&
-		(base.GetChar(c.X, c.Y + 1) == L' ') &&
-		(base.GetChar(d.X, d.Y + 1) == L' '))
+	if ((base.GetChar(a.X, a.Y + one) == L' ') &&
+		(base.GetChar(b.X, b.Y + one) == L' ') &&
+		(base.GetChar(c.X, c.Y + one) == L' ') &&
+		(base.GetChar(d.X, d.Y + one) == L' '))
 	{
-		a.Y += 1;
-		b.Y += 1;
-		c.Y += 1;
-		d.Y += 1;
+		a.Y += one;
+		b.Y += one;
+		c.Y += one;
+		d.Y += one;
 		return true;
 	}
 	else return false;
@@ -78,15 +81,15 @@ bool Shape::moveDown(BaseApp &base) {
 
 void Shape::moveUp(BaseApp &base) {
 	SetShape(base, L' ');
-	if ((base.GetChar(a.X, a.Y - 1) == L' ') &&
-		(base.GetChar(b.X, b.Y - 1) == L' ') &&
-		(base.GetChar(c.X, c.Y - 1) == L' ') &&
-		(base.GetChar(d.X,d.Y - 1) == L' '))
+	if ((base.GetChar(a.X, a.Y - one) == L' ') &&
+		(base.GetChar(b.X, b.Y - one) == L' ') &&
+		(base.GetChar(c.X, c.Y - one) == L' ') &&
+		(base.GetChar(d.X,d.Y - one) == L' '))
 	{
-		a.Y -= 1;
-		b.Y -= 1;
-		c.Y -= 1;
-		d.Y -= 1;
+		a.Y -= one;
+		b.Y -= one;
+		c.Y -= one;
+		d.Y -= one;
 	}
 }
 
@@ -95,9 +98,9 @@ void Shape::moveUp(BaseApp &base) {
 Quadrate::Quadrate(COORD spawn)
 {
 	a = spawn;
-	b = spawn; b.Y += 1;
-	c = spawn; c.X += 1;
-	d = spawn; d.X += 1; d.Y += 1;
+	b = spawn; b.Y += one;
+	c = spawn; c.X += one;
+	d = spawn; d.X += one; d.Y += one;
 	position = 0;
 }
 
@@ -108,9 +111,9 @@ void Quadrate::changePosition(BaseApp &base) {}
 Line::Line(COORD spawn)
 {
 	a = spawn; 
-	b = spawn; b.X += 1;
-	c = spawn; c.X += 2;
-	d = spawn; d.X -= 1; 
+	b = spawn; b.X += one;
+	c = spawn; c.X += two;
+	d = spawn; d.X -= one; 
 	position = 0;
 }
 
@@ -119,29 +122,29 @@ void Line::changePosition(BaseApp &base) {
 	{
 		if (checkPosition(
 			COORD{ a.X , a.Y },
-			COORD{ b.X - 1, b.Y + 1 },
-			COORD{ c.X - 2, c.Y + 2 },
-			COORD{ d.X + 1, d.Y - 1 },
+			COORD{ b.X - one, b.Y + one },
+			COORD{ c.X - two, c.Y + two },
+			COORD{ d.X + one, d.Y - one },
 			base))
 		{
-			b.X -= 1; b.Y += 1;
-			c.X -= 2; c.Y += 2;
-			d.X += 1; d.Y -= 1;
-			position = 1;
+			b.X -= one; b.Y += one;
+			c.X -= two; c.Y += two;
+			d.X += one; d.Y -= one;
+			position = one;
 		}
 	}
 	else
 	{
 		if (checkPosition(
 			COORD{ a.X , a.Y },
-			COORD{ b.X + 1, b.Y - 1 },
-			COORD{ c.X + 2, c.Y - 2 },
-			COORD{ d.X - 1, d.Y + 1 },
+			COORD{ b.X + one, b.Y - one },
+			COORD{ c.X + two, c.Y - two },
+			COORD{ d.X - one, d.Y + one },
 			base))
 		{
-			b.X += 1; b.Y -= 1;
-			c.X += 2; c.Y -= 2;
-			d.X -= 1; d.Y += 1;
+			b.X += one; b.Y -= one;
+			c.X += two; c.Y -= two;
+			d.X -= one; d.Y += one;
 			position = 0;
 		}
 	}
@@ -152,9 +155,9 @@ void Line::changePosition(BaseApp &base) {
 Calipers::Calipers(COORD spawn)
 {
 	a = spawn; 
-	b = spawn; b.Y += 1;
-	c = spawn; c.X -= 1;
-	d = spawn; d.X += 1; d.Y += 1;
+	b = spawn; b.Y += one;
+	c = spawn; c.X -= one;
+	d = spawn; d.X += one; d.Y += one;
 	position = 0;
 }
 
@@ -164,13 +167,13 @@ void Calipers::changePosition(BaseApp &base) { //Z
 		if (checkPosition(
 			COORD{ a.X , a.Y },
 			COORD{ b.X , b.Y },
-			COORD{ c.X , c.Y + 1 },
-			COORD{ d.X - 2, d.Y + 1 },
+			COORD{ c.X , c.Y + one },
+			COORD{ d.X - two, d.Y + one },
 			base))
 		{
-			c.Y += 1;
-			d.X -= 2; d.Y += 1;
-			position = 1;
+			c.Y += one;
+			d.X -= two; d.Y += one;
+			position = one;
 		}
 	}
 	else
@@ -178,12 +181,12 @@ void Calipers::changePosition(BaseApp &base) { //Z
 		if (checkPosition(
 			COORD{ a.X , a.Y },
 			COORD{ b.X , b.Y },
-			COORD{ c.X , c.Y - 1 },
-			COORD{ d.X + 2, d.Y - 1 },
+			COORD{ c.X , c.Y - one },
+			COORD{ d.X + two, d.Y - one },
 			base))
 		{
-			c.Y -= 1;
-			d.X += 2; d.Y -= 1;
+			c.Y -= one;
+			d.X += two; d.Y -= one;
 			position = 0;
 		}
 	}
@@ -195,9 +198,9 @@ void Calipers::changePosition(BaseApp &base) { //Z
 F_Calipers::F_Calipers(COORD spawn)
 {
 	a = spawn;
-	b = spawn; b.Y += 1;
-	c = spawn; c.X += 1;
-	d = spawn; d.X -= 1; d.Y += 1;
+	b = spawn; b.Y += one;
+	c = spawn; c.X += one;
+	d = spawn; d.X -= one; d.Y += one;
 	position = 0;
 }
 
@@ -205,28 +208,28 @@ void F_Calipers::changePosition(BaseApp &base) {
 	if (!position)
 	{
 		if (checkPosition(
-			COORD{ a.X - 1, a.Y },
+			COORD{ a.X - one, a.Y },
 			COORD{ b.X , b.Y },
-			COORD{ c.X - 1 , c.Y + 2 },
+			COORD{ c.X - one , c.Y + two },
 			COORD{ d.X , d.Y},
 			base))
 		{
-			a.X -= 1;
-			c.X -= 1; c.Y += 2;
-			position = 1;
+			a.X -= one;
+			c.X -= one; c.Y += two;
+			position = one;
 		}
 	}
 	else
 	{
 		if (checkPosition(
-			COORD{ a.X + 1, a.Y },
+			COORD{ a.X + one, a.Y },
 			COORD{ b.X , b.Y },
-			COORD{ c.X + 1 , c.Y - 2 },
+			COORD{ c.X + one , c.Y - two },
 			COORD{ d.X , d.Y },
 			base))
 		{
-			a.X += 1;
-			c.X += 1; c.Y -= 2;
+			a.X += one;
+			c.X += one; c.Y -= two;
 			position = 0;
 		}
 	}
@@ -237,9 +240,9 @@ void F_Calipers::changePosition(BaseApp &base) {
 T_Form::T_Form(COORD spawn)
 {
 	a = spawn;
-	b = spawn; b.Y += 1;
-	c = b; c.X -= 1;
-	d = b; d.X += 1;
+	b = spawn; b.Y += one;
+	c = b; c.X -= one;
+	d = b; d.X += one;
 	position = 0;
 }
 
@@ -247,60 +250,60 @@ void T_Form::changePosition(BaseApp &base) {
 	if (position == 0)
 	{
 		if (checkPosition(
-			COORD{ a.X + 1, a.Y + 1 },
+			COORD{ a.X + one, a.Y + one },
 			COORD{ b.X , b.Y },
-			COORD{ c.X + 1, c.Y - 1 },
-			COORD{ d.X - 1 , d.Y + 1},
+			COORD{ c.X + one, c.Y - one },
+			COORD{ d.X - one , d.Y + one},
 			base))
 		{
-			a.X += 1; a.Y += 1;
-			c.X += 1; c.Y -= 1;
-			d.X -= 1; d.Y += 1;
-			position = 1;
+			a.X += one; a.Y += one;
+			c.X += one; c.Y -= one;
+			d.X -= one; d.Y += one;
+			position = one;
 		}
 	}
-	else if (position == 1)
+	else if (position == one)
 	{
 		if (checkPosition(
-			COORD{ a.X - 1, a.Y + 1 },
+			COORD{ a.X - one, a.Y + one },
 			COORD{ b.X , b.Y },
-			COORD{ c.X + 1 , c.Y + 1 },
-			COORD{ d.X - 1 , d.Y - 1 },
+			COORD{ c.X + one , c.Y + one },
+			COORD{ d.X - one , d.Y - one },
 			base))
 		{
-			a.X -= 1; a.Y += 1;
-			c.X += 1; c.Y += 1;
-			d.X -= 1; d.Y -= 1;
-			position = 2;
+			a.X -= one; a.Y += one;
+			c.X += one; c.Y += one;
+			d.X -= one; d.Y -= one;
+			position = two;
 		}
 	}
-	else if (position == 2)
+	else if (position == two)
 	{
 		if (checkPosition(
-			COORD{ a.X - 1 , a.Y - 1 },
+			COORD{ a.X - one , a.Y - one },
 			COORD{ b.X , b.Y },
-			COORD{ c.X - 1 , c.Y + 1 },
-			COORD{ d.X + 1, d.Y - 1},
+			COORD{ c.X - one , c.Y + one },
+			COORD{ d.X + one, d.Y - one},
 			base))
 		{
-			a.X -= 1; a.Y -= 1;
-			c.X -= 1; c.Y += 1;
-			d.X += 1; d.Y -= 1;
+			a.X -= one; a.Y -= one;
+			c.X -= one; c.Y += one;
+			d.X += one; d.Y -= one;
 			position = 3;
 		}
 	}
 	else if (position == 3)
 	{
 		if (checkPosition(
-			COORD{ a.X + 1 , a.Y - 1 },
+			COORD{ a.X + one , a.Y - one },
 			COORD{ b.X , b.Y },
-			COORD{ c.X - 1 , c.Y - 1 },
-			COORD{ d.X + 1, d.Y + 1},
+			COORD{ c.X - one , c.Y - one },
+			COORD{ d.X + one, d.Y + one},
 			base))
 		{
-			a.X += 1; a.Y -= 1;
-			c.X -= 1; c.Y -= 1;
-			d.X += 1; d.Y += 1;
+			a.X += one; a.Y -= one;
+			c.X -= one; c.Y -= one;
+			d.X += one; d.Y += one;
 			position = 0;
 		}
 	}
@@ -311,69 +314,69 @@ void T_Form::changePosition(BaseApp &base) {
 G_Form::G_Form(COORD spawn)
 {
 	a = spawn;
-	b = spawn; b.Y += 1;
-	c = spawn; c.Y += 2;
-	d = c;  d.X -= 1;
+	b = spawn; b.Y += one;
+	c = spawn; c.Y += two;
+	d = c;  d.X -= one;
 }
 
 void G_Form::changePosition(BaseApp &base) {
 	if (position == 0)
 	{
 		if (checkPosition(
-			COORD{ a.X + 1, a.Y + 1},
+			COORD{ a.X + one, a.Y + one},
 			COORD{ b.X , b.Y },
-			COORD{ c.X - 1 , c.Y - 1},
-			COORD{ d.X , d.Y - 2 },
+			COORD{ c.X - one , c.Y - one},
+			COORD{ d.X , d.Y - two },
 			base))
 		{
-			a.X += 1; a.Y += 1;
-			c.X -= 1; c.Y -= 1;
-			d.Y -= 2;
-			position = 1;
+			a.X += one; a.Y += one;
+			c.X -= one; c.Y -= one;
+			d.Y -= two;
+			position = one;
 		}
 	}
-	else if (position == 1)
+	else if (position == one)
 	{
 		if (checkPosition(
-			COORD{ a.X - 1, a.Y + 1 },
+			COORD{ a.X - one, a.Y + one },
 			COORD{ b.X , b.Y },
-			COORD{ c.X + 2, c.Y - 1 },
-			COORD{ d.X + 1, d.Y },
+			COORD{ c.X + two, c.Y - one },
+			COORD{ d.X + one, d.Y },
 			base))
 		{
-			a.X -= 1; a.Y += 1;
-			c.X += 2; c.Y -= 1;
-			d.X += 1;
-			position = 2;
+			a.X -= one; a.Y += one;
+			c.X += two; c.Y -= one;
+			d.X += one;
+			position = two;
 		}
 	}
-	else if (position == 2)
+	else if (position == two)
 	{
 		if (checkPosition(
-			COORD{ a.X - 1 , a.Y - 1},
+			COORD{ a.X - one , a.Y - one},
 			COORD{ b.X , b.Y },
-			COORD{ c.X , c.Y + 1 },
-			COORD{ d.X + 1, d.Y + 2 },
+			COORD{ c.X , c.Y + one },
+			COORD{ d.X + one, d.Y + two },
 			base))
 		{
-			a.X -= 1; a.Y -= 1;
-			c.Y += 1;
-			d.X += 1; d.Y += 2;
+			a.X -= one; a.Y -= one;
+			c.Y += one;
+			d.X += one; d.Y += two;
 			position = 3;
 		}
 	}
 	else if (position == 3)
 	{
 		if (checkPosition(
-			COORD{ a.X + 1 , a.Y - 1 },
+			COORD{ a.X + one , a.Y - one },
 			COORD{ b.X , b.Y },
-			COORD{ c.X - 1 , c.Y + 1 },
-			COORD{ d.X - 2 , d.Y },
+			COORD{ c.X - one , c.Y + one },
+			COORD{ d.X - two , d.Y },
 			base))
 		{
-			a.X += 1; a.Y -= 1;
-			c.X -= 1; c.Y += 1;
-			d.X -= 2; 
+			a.X += one; a.Y -= one;
+			c.X -= one; c.Y += one;
+			d.X -= two; 
 			position = 0;
 		}
 	}
@@ -384,69 +387,69 @@ void G_Form::changePosition(BaseApp &base) {
 F_G_Form::F_G_Form(COORD spawn)
 {
 	a = spawn;
-	b = spawn; b.Y += 1;
-	c = spawn; c.Y += 2;
-	d = c; d.X += 1;
+	b = spawn; b.Y += one;
+	c = spawn; c.Y += two;
+	d = c; d.X += one;
 }
 
 void F_G_Form::changePosition(BaseApp &base) {
 	if (position == 0)
 	{
 		if (checkPosition(
-			COORD{ a.X + 1, a.Y + 1 },
+			COORD{ a.X + one, a.Y + one },
 			COORD{ b.X , b.Y },
-			COORD{ c.X - 1 , c.Y - 1 },
-			COORD{ d.X - 2, d.Y },
+			COORD{ c.X - one , c.Y - one },
+			COORD{ d.X - two, d.Y },
 			base))
 		{
-			a.X += 1; a.Y += 1;
-			c.X -= 1; c.Y -= 1;
-			d.X -= 2;
-			position = 1;
+			a.X += one; a.Y += one;
+			c.X -= one; c.Y -= one;
+			d.X -= two;
+			position = one;
 		}
 	}
-	else if (position == 1)
+	else if (position == one)
 	{
 		if (checkPosition(
-			COORD{ a.X - 1, a.Y + 1 },
+			COORD{ a.X - one, a.Y + one },
 			COORD{ b.X , b.Y },
-			COORD{ c.X + 1, c.Y - 1 },
-			COORD{ d.X , d.Y - 2 },
+			COORD{ c.X + one, c.Y - one },
+			COORD{ d.X , d.Y - two },
 			base))
 		{
-			a.X -= 1; a.Y += 1;
-			c.X += 1; c.Y -= 1;
-			d.Y -= 2;
-			position = 2;
+			a.X -= one; a.Y += one;
+			c.X += one; c.Y -= one;
+			d.Y -= two;
+			position = two;
 		}
 	}
-	else if (position == 2)
+	else if (position == two)
 	{
 		if (checkPosition(
-			COORD{ a.X - 1 , a.Y - 1 },
+			COORD{ a.X - one , a.Y - one },
 			COORD{ b.X , b.Y },
-			COORD{ c.X + 1, c.Y + 1 },
-			COORD{ d.X + 2 , d.Y },
+			COORD{ c.X + one, c.Y + one },
+			COORD{ d.X + two , d.Y },
 			base))
 		{
-			a.X -= 1; a.Y -= 1;
-			c.X += 1; c.Y += 1;
-			d.X += 2; 
+			a.X -= one; a.Y -= one;
+			c.X += one; c.Y += one;
+			d.X += two; 
 			position = 3;
 		}
 	}
 	else if (position == 3)
 	{
 		if (checkPosition(
-			COORD{ a.X + 1 , a.Y - 1 },
+			COORD{ a.X + one , a.Y - one },
 			COORD{ b.X , b.Y },
-			COORD{ c.X - 1 , c.Y + 1 },
-			COORD{ d.X , d.Y + 2},
+			COORD{ c.X - one , c.Y + one },
+			COORD{ d.X , d.Y + two},
 			base))
 		{
-			a.X += 1; a.Y -= 1;
-			c.X -= 1; c.Y += 1;
-			d.Y += 2;
+			a.X += one; a.Y -= one;
+			c.X -= one; c.Y += one;
+			d.Y += two;
 			position = 0;
 		}
 	}

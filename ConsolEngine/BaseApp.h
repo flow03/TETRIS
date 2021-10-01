@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 
+#include "Main_Menu.hpp"
+
 //using namespace std;
 
 class BaseApp

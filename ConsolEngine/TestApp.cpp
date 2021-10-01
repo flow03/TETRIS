@@ -1,7 +1,6 @@
 #include "TestApp.h"
 
 
-
 TestApp::TestApp() : Parent(28, 24)
 {
 	sum = 0.0;
@@ -156,6 +155,8 @@ void TestApp::KeyPressed(int btnCode)
 		}
 		break;
 	case 27:  //Esc
+		MainMenu(isGameActive);
+		break;
 	case 32:  //Space
 		SetConsoleCursor(7, 10);
 		std::cout << "PAUSE";

@@ -28,7 +28,7 @@ protected:
 	COORD b;
 	COORD c;
 	COORD d;
-
+	
 	int position = 0; 
 };
 

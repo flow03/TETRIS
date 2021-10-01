@@ -180,6 +180,9 @@ void BaseApp::Run()
 	int currentKey = 0;
 
 	__int64 deltaTime = 0;
+
+	MainMenu(isGameActive);
+
 	//главный цикл игры
 	while (isGameActive)
 	{
