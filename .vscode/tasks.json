@@ -59,7 +59,7 @@
 				"-o",
 				"${fileDirname}\\${fileBasenameNoExtension}.exe",
 				//"-std=c++17",
-				"-w"
+				//"-w"
 			],
 			"options": {
 				"cwd": "${fileDirname}"

@@ -14,7 +14,7 @@ SETCONSOLEFONT SetConsoleFont;
 
 BaseApp::BaseApp(int xSize, int ySize) : X_SIZE(xSize), Y_SIZE(ySize)
 {
-	isGameActive = true;
+	// isGameActive = true;
 
 	SMALL_RECT windowSize = { (short)0, (short)0, (short)(X_SIZE - 1), (short)(Y_SIZE - 1)};
 	COORD windowBufSize = { (short)X_SIZE, (short)Y_SIZE}; //COORD windowBufSize = {X_SIZE+1, Y_SIZE+1};
@@ -189,10 +189,10 @@ void BaseApp::Run()
 		timer.Start();
 		if (_kbhit())
 		{
-			currentKey = _getch();
+			currentKey = ReadKey();
 			KeyPressed (currentKey);
-			if (!FlushConsoleInputBuffer(mConsoleIn))
-				std::cout<<"FlushConsoleInputBuffer failed with error "<<GetLastError();
+			// if (!FlushConsoleInputBuffer(mConsoleIn))
+			// 	std::cout<<"FlushConsoleInputBuffer failed with error "<<GetLastError();
 		}
 
 		//UpdateF((float)deltaTime / 1000.0f);

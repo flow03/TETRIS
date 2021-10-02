@@ -37,7 +37,7 @@ private:
 
 public:
 	int score = 0;
-	bool isGameActive = true;
+	bool isGameActive = false;
 
 	//размеры области вывода по горизонтали и вертикали в символах
 	const int X_SIZE;

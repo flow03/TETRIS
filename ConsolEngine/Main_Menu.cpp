@@ -71,8 +71,9 @@ void MainMenu(bool &isGameActive)
 				{
                     isMenuActive = false;
 					//system("cls");
+					isGameActive = true;
                     std::cout <<"\n--NEW GAME--\n";
-					 _getch();
+					_getch();
                 }
 			}
 			else if (selector == 2)	// Save/Load

@@ -117,35 +117,31 @@ void TestApp::KeyPressed(int btnCode)
 	//-----------Shape--------------
 	//case 69:  //E
 	//case 101: //e
-	//case 119: //w
-	//case 87:  //W
 	//	isShape = false;
 	//	shape_ptr->SetShape(*this, L' ');
 	//	break;
-	//case 72:  //↑
-	//	shape_ptr->moveUp(*this);
-	//	break;
-	case 83:  //S 
-	case 115: //s
-	case 80:  //↓
+	case 63:	// і, І
+	case 235:  	// ы
+	case 155:	// Ы
+	case 83:  	// S
 		isDown = true;
 		break;
-	case 65:  //A
-	case 97:  //a
-	case 75:  //←
+	case 228:	// ф
+	case 148:	// Ф
+	case 65:  	// A
 		if (!isDown)
 			shape_ptr->moveLeft(*this);
 		break;
-	case 68:  //D
-	case 100: //d
-	case 77:  //→
+	case 162:	// в
+	case 130:	// В
+	case 68:  	// D
 		if (!isDown)
 			shape_ptr->moveRight(*this);
 		break;
-	case 72:  //↑
-	//case 32:  //Space
-	case 119: //w
-	case 87:  //W
+	case 13:	// Enter
+	case 230: 	// ц
+	case 150:	// Ц
+	case 87: 	// W
 		if (!isDown) {
 			shape_ptr->SetShape(*this, L' ');
 			shape_ptr->changePosition(*this);
