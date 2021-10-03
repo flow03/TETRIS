@@ -4,15 +4,17 @@
 #include <random>
 #include <cassert>
 #include <conio.h>
+
 #include "BaseApp.h"
 #include "Shape.h"
+#include "Main_Menu.hpp"
 
 class TestApp : public BaseApp
 {
 	typedef BaseApp Parent;
 
 	private:
-		float sum = 0.0;
+		float sum = 0.0;	// связано с фпс
 		float speed;
 		bool isDown = false;
 		//int score;
@@ -24,6 +26,7 @@ class TestApp : public BaseApp
 
 		std::vector<std::vector<wchar_t>> Blocks;
 		std::vector<wchar_t> new_row;
+		bool isMenuActive = false;	// меню
 
 		//рандом
 		std::default_random_engine engine; //minstd_rand, mt19937, mt19937_64, default_random_engine
@@ -38,4 +41,6 @@ class TestApp : public BaseApp
 		void CheckBlocks();
 		//int GetScore() const;
 		void DrawShape(Shape * _ptr, wchar_t symbol, COORD c);
+		void ClearBlocks();	// очищает игровое поле
+		void MainMenu();
 };

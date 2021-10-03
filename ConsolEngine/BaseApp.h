@@ -31,6 +31,7 @@ private:
 	const wchar_t r = 16;
 
 	std::vector<std::vector< wchar_t > >screenBuffer;
+	TCHAR  szbuff[255];	// заголовок окна
 	
 
 	void Render();
@@ -66,4 +67,5 @@ public:
 	будет уже непосредственно код самой клавиши, его можно получить, вызвав метод getch().
 	Метод KeyPressed так же можно переопределить в наследнике*/
 	virtual void KeyPressed (int btnCode){}
+	
 };

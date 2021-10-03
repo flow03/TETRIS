@@ -78,13 +78,14 @@ BaseApp::BaseApp(int xSize, int ySize) : X_SIZE(xSize), Y_SIZE(ySize)
 	mLpWriteRegion.Bottom = Y_SIZE;	// прямоугольник для чтения
 
 
-	for (int x = 0; x < X_SIZE + 1; ++x)
-	{
-		for (int y = 0; y < Y_SIZE + 1; ++y)
-		{
-			SetChar(x, y, L' ');
-		}
-	}
+	CenterWindow();
+	// for (int x = 0; x < X_SIZE + 1; ++x)
+	// {
+	// 	for (int y = 0; y < Y_SIZE + 1; ++y)
+	// 	{
+	// 		SetChar(x, y, L' ');
+	// 	}
+	// }
 
 	screenBuffer = {
 	{d, d , d , d , d , d , d , d , d , d , d , d , d , d , d , d , d , d , d , d , d , d , d , d , d , d , d , d },
@@ -113,7 +114,7 @@ BaseApp::BaseApp(int xSize, int ySize) : X_SIZE(xSize), Y_SIZE(ySize)
 	{u, u , u , u , u , u , u , u , u , u , u , u , u , u , u , u , u , u , u , u , u , u , u , u , u , u , u , u}
 	};
 
-	//вывод игрового поля
+	//	одноразовый вывод игрового поля
 	for (int x = 0; x < screenBuffer.size(); ++x)
 		for (int y = 0; y < screenBuffer[x].size(); ++y)
 		{
@@ -166,6 +167,17 @@ void BaseApp::RenderSystemDrawText(int x, int y, const char *text)
 
 void BaseApp::Render()
 {
+	//RenderSystemDrawText(20, 10, (std::to_string(deltaTime)).c_str());
+	RenderSystemDrawText(21, 3, "NEXT");
+	RenderSystemDrawText(19, 10, "CURRENT");
+	RenderSystemDrawText(20, 17, "SCORE");
+	if (score == 0)
+		RenderSystemDrawText(22, 19, (std::to_string(score).c_str()));
+	else if ((score >= 100) && (score < 1000))
+		RenderSystemDrawText(21, 19, (std::to_string(score).c_str()));
+	else if (score >= 1000)
+		RenderSystemDrawText(20, 19, (std::to_string(score).c_str()));
+	
 	if (!WriteConsoleOutputA(mConsole, mChiBuffer, mDwBufferSize, mDwBufferCoord, &mLpWriteRegion))
 	{
 		printf("WriteConsoleOutput failed - (%d)\n", GetLastError()); 
@@ -181,9 +193,9 @@ void BaseApp::Run()
 
 	__int64 deltaTime = 0;
 
-	MainMenu(isGameActive);
+	//MainMenu(isGameActive, this);
 
-	//главный цикл игры
+	// ГЛАВНЫЙ ЦИКЛ ИГРЫ
 	while (isGameActive)
 	{
 		timer.Start();
@@ -211,9 +223,9 @@ void BaseApp::Run()
 
 		sum += deltaTime;
 		//counter++;
-		if (sum >= 1000)
+		if (sum >= 500)
 		{
-			TCHAR  szbuff[255];
+			
 			StringCchPrintf(szbuff, 255, TEXT("CurrentKey: %d"), currentKey);
 			SetConsoleTitle(szbuff);
 
@@ -221,17 +233,17 @@ void BaseApp::Run()
 			sum = 0;
 		}
 	}
+	// КОНЕЦ ГЛАВНОГО ЦИКЛА ИГРЫ
 
-	std::vector<wchar_t> new_row;
-	new_row.assign(28, L' ');
+	//	очистка игрового поля
+	for (int x = 0; x < X_SIZE + 1; ++x)
+		for (int y = 0; y < Y_SIZE + 1; ++y)
+			SetChar(x, y, ' ');
 
-	for (auto it = screenBuffer.begin(); it != screenBuffer.end(); ++it)
-		*it = new_row;
-
-	//вывод игрового поля
-	for (int x = 0; x < screenBuffer.size(); ++x)
-		for (int y = 0; y < screenBuffer[x].size(); ++y)
-			SetChar(y, x, screenBuffer[x][y]);
+	//	вывод игрового поля
+	// for (int x = 0; x < screenBuffer.size(); ++x)
+	// 	for (int y = 0; y < screenBuffer[x].size(); ++y)
+	// 		SetChar(y, x, screenBuffer[x][y]);
 
 	RenderSystemDrawText(9, 5, "GAME OVER");
 	RenderSystemDrawText(9, 10, "Your score");

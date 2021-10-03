@@ -2,8 +2,9 @@
 
 int main ()
 {
-	TestApp app;
-	app.Run();
+	TestApp App;
+	App.MainMenu();
+	//App.Run();
 
 	return 0;
 }

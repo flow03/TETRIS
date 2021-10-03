@@ -1,20 +1,14 @@
 #include "TestApp.h"
 
 
+std::string exitAskStr = "Do you want exit?";
+std::string newGameAsk = "Do you want to start?";
+
 TestApp::TestApp() : Parent(28, 24)
 {
 	sum = 0.0;
 
-	isDown = false;
-	isShape = false;
-	speed = 450;
-	score = 0;
-	
-	new_row.assign(15, L' ');
-
-	Blocks.resize(20);
-	for (auto it = Blocks.begin(); it != Blocks.end(); ++it)
-		*it = new_row;
+	ClearBlocks();
 }
 
 void TestApp::DrawShape(Shape * _ptr, wchar_t symbol, COORD c) {
@@ -151,7 +145,7 @@ void TestApp::KeyPressed(int btnCode)
 		}
 		break;
 	case 27:  //Esc
-		MainMenu(isGameActive);
+		MainMenu();
 		break;
 	case 32:  //Space
 		SetConsoleCursor(7, 10);
@@ -194,18 +188,6 @@ void TestApp::UpdateF(float deltaTime)
 
 	//-----------------------------
 
-	//RenderSystemDrawText(20, 10, (std::to_string(deltaTime)).c_str());
-	RenderSystemDrawText(21, 3, "NEXT");
-	RenderSystemDrawText(19, 10, "CURRENT");
-	RenderSystemDrawText(20, 17, "SCORE");
-	if (score == 0)
-		RenderSystemDrawText(22, 19, (std::to_string(score).c_str()));
-	else if ((score >= 100) && (score < 1000))
-		RenderSystemDrawText(21, 19, (std::to_string(score).c_str()));
-	else if (score >= 1000)
-		RenderSystemDrawText(20, 19, (std::to_string(score).c_str()));
-
-	//-----------------------------
 	if (isDown) speed = 10; 
 	else speed = 450;
 
@@ -228,6 +210,127 @@ void TestApp::UpdateF(float deltaTime)
 	}
 }
 
+void TestApp::ClearBlocks()
+{
+	isDown = false;
+	isShape = false;
+	speed = 450;
+	score = 0;
 
+	new_row.assign(15, L' ');
+
+	Blocks.resize(20);
+	for (auto it = Blocks.begin(); it != Blocks.end(); ++it)
+		*it = new_row;
+}
+
+void TestApp::MainMenu()
+{
+	//MenuInit();
+
+	system("cls");
+
+	// Select
+	int up = 4;
+	int down = 0;
+	if (!isGameActive) down = 1;
+	int selector = down;
+
+	auto UpdateMenu = [&selector, this](int up, int down)
+	{
+		// Render
+		out_Menu(selector, isGameActive);
+
+		// Update
+		char Key = ReadKey();
+
+		switch (Key)
+		{
+		// Arrow down
+		case 'S':
+		{
+			selector++;
+			if (selector > up)
+				selector = down;
+
+			break;
+		}
+		// Arrow up
+		case 'W':
+		{
+			selector--;
+			if (selector < down)
+				selector = up;
+
+			break;
+		}
+		// Enter
+		case 13:
+		{
+			if (selector == 0)	// Continue
+			{
+				isMenuActive = false;
+			}
+			else if (selector == 1)	// New
+			{
+				if (YesNoAsk(newGameAsk))
+				{
+                    isMenuActive = false;
+					//system("cls");
+					isGameActive = true;
+                    std::cout <<"\n--NEW GAME--\n";
+					this->ClearBlocks();
+					this->Run();
+					_getch();
+                }
+			}
+			else if (selector == 2)	// Save/Load
+			{
+				system("cls");
+				std::cout <<"\n--SAVE & LOAD--\n";
+                _getch();
+				system("cls");
+			}
+			else if (selector == 3)	// Statistic
+			{
+                system("cls");
+				std::cout <<"\n--STATISTIC--\n";
+                _getch();
+				system("cls");
+			}
+			else if (selector == 4)	// Exit
+			{
+				if (YesNoAsk(exitAskStr))
+				{
+                    isMenuActive = false;
+					isGameActive = false;
+				}
+			}
+			break;
+		}
+		// Esc
+		case 27:
+			if (isGameActive) isMenuActive = false;	// Cancel
+			else if (YesNoAsk(exitAskStr))
+			{
+				isGameActive = false;
+				isMenuActive = false;
+			}
+			break;
+		}
+	};
+
+	isMenuActive = true;
+	do
+	{
+		UpdateMenu(up, down);
+	} 
+	while (isMenuActive == true);
+
+
+	system("cls");
+
+	//if (isGameActive) Description();
+}
 
 

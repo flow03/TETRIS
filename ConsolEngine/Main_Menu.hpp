@@ -5,8 +5,7 @@
 #include <conio.h>
 #include <string>
 
-
-void MainMenu(bool &isGameActive);
+//#include "BaseApp.h"
 
 short getPosition(const std::string &str);
 
