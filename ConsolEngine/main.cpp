@@ -3,8 +3,8 @@
 int main ()
 {
 	TestApp App;
-	App.MainMenu();
-	//App.Run();
+	//App.MainMenu();
+	App.Run();
 
 	return 0;
 }

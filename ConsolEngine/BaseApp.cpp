@@ -78,7 +78,7 @@ BaseApp::BaseApp(int xSize, int ySize) : X_SIZE(xSize), Y_SIZE(ySize)
 	mLpWriteRegion.Bottom = Y_SIZE;	// прямоугольник для чтения
 
 
-	CenterWindow();
+	menu.CenterWindow();
 	// for (int x = 0; x < X_SIZE + 1; ++x)
 	// {
 	// 	for (int y = 0; y < Y_SIZE + 1; ++y)
@@ -123,6 +123,12 @@ BaseApp::BaseApp(int xSize, int ySize) : X_SIZE(xSize), Y_SIZE(ySize)
 			//backBuffer[x][y] = screenBuffer[x][y];
 		//}
 		}
+
+		RenderSystemDrawText(21, 3, "NEXT");
+		RenderSystemDrawText(19, 10, "CURRENT");
+		RenderSystemDrawText(20, 17, "SCORE");
+
+		DrawScore(22, 19);
 }
 
 BaseApp::~BaseApp()
@@ -165,19 +171,18 @@ void BaseApp::RenderSystemDrawText(int x, int y, const char *text)
 	}
 }
 
+void BaseApp::RenderSystemDrawText(int x, int y, std::string text)
+{
+	for (char symbol : text)
+	{
+		SetChar(x, y, symbol);
+		++x;
+		if (x >= X_SIZE) { ++y; }
+	}
+}
+
 void BaseApp::Render()
 {
-	//RenderSystemDrawText(20, 10, (std::to_string(deltaTime)).c_str());
-	RenderSystemDrawText(21, 3, "NEXT");
-	RenderSystemDrawText(19, 10, "CURRENT");
-	RenderSystemDrawText(20, 17, "SCORE");
-	if (score == 0)
-		RenderSystemDrawText(22, 19, (std::to_string(score).c_str()));
-	else if ((score >= 100) && (score < 1000))
-		RenderSystemDrawText(21, 19, (std::to_string(score).c_str()));
-	else if (score >= 1000)
-		RenderSystemDrawText(20, 19, (std::to_string(score).c_str()));
-	
 	if (!WriteConsoleOutputA(mConsole, mChiBuffer, mDwBufferSize, mDwBufferCoord, &mLpWriteRegion))
 	{
 		printf("WriteConsoleOutput failed - (%d)\n", GetLastError()); 
@@ -193,7 +198,7 @@ void BaseApp::Run()
 
 	__int64 deltaTime = 0;
 
-	//MainMenu(isGameActive, this);
+	menu.ShowMenu(isGameActive);
 
 	// ГЛАВНЫЙ ЦИКЛ ИГРЫ
 	while (isGameActive)
@@ -201,7 +206,7 @@ void BaseApp::Run()
 		timer.Start();
 		if (_kbhit())
 		{
-			currentKey = ReadKey();
+			currentKey = menu.ReadKey();
 			KeyPressed (currentKey);
 			// if (!FlushConsoleInputBuffer(mConsoleIn))
 			// 	std::cout<<"FlushConsoleInputBuffer failed with error "<<GetLastError();
@@ -209,15 +214,19 @@ void BaseApp::Run()
 
 		//UpdateF((float)deltaTime / 1000.0f);
 		UpdateF((float)deltaTime);
-		Render();
+		if (isGameActive) Render();
 		Sleep(1);
 
-		while (1)
-		{
+		do
 			deltaTime = timer.Now();
-			if (deltaTime > 20)
-				break;
-		}
+		while (deltaTime <= 20);
+
+		// while (1)
+		// {
+		// 	deltaTime = timer.Now();
+		// 	if (deltaTime > 20)
+		// 		break;
+		// }
 
 		//deltaTime = timer.Now();
 
@@ -247,13 +256,17 @@ void BaseApp::Run()
 
 	RenderSystemDrawText(9, 5, "GAME OVER");
 	RenderSystemDrawText(9, 10, "Your score");
-	if (score == 0)
-		RenderSystemDrawText(13, 12, (std::to_string(score).c_str()));
-	else if (score >= 100)
-		RenderSystemDrawText(12, 12, (std::to_string(score).c_str()));
-
+	DrawScore(13, 12);
 	RenderSystemDrawText(3, 21, "Press any key to exit");
-	Render(); 
+	Render();
 	
 	_getch();
+}
+
+void BaseApp::DrawScore(int x_center, int y)
+{
+	std::string str = std::to_string(score);
+	int x = x_center - str.size()/2;
+
+	RenderSystemDrawText(x, y, str);
 }

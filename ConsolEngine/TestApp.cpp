@@ -1,9 +1,6 @@
 #include "TestApp.h"
 
 
-std::string exitAskStr = "Do you want exit?";
-std::string newGameAsk = "Do you want to start?";
-
 TestApp::TestApp() : Parent(28, 24)
 {
 	sum = 0.0;
@@ -18,8 +15,6 @@ void TestApp::DrawShape(Shape * _ptr, wchar_t symbol, COORD c) {
 
 	_ptr->SetShape(*this, symbol, c);
 }
-
-//int TestApp::GetScore() const { return score; }
 
 void TestApp::CheckBlocks() {
 	//запись в массив
@@ -46,6 +41,7 @@ void TestApp::CheckBlocks() {
 		if (count == 15) 
 		{ 
 			score += 100; //плюсуем результат
+			DrawScore(22, 19); //рисуем результат
 			auto iter = Blocks.begin() + y; //создаём итератор на текущую строку
 			Blocks.erase(iter); //передаём строку в erase
 			Blocks.push_back(new_row); //добавляем в конец массива(в верх поля) чистую строку
@@ -145,7 +141,7 @@ void TestApp::KeyPressed(int btnCode)
 		}
 		break;
 	case 27:  //Esc
-		MainMenu();
+		menu.ShowMenu(isGameActive);
 		break;
 	case 32:  //Space
 		SetConsoleCursor(7, 10);
@@ -186,6 +182,10 @@ void TestApp::UpdateF(float deltaTime)
 	if (shape_ptr)
 	shape_ptr->SetShape(*this, 10);
 
+	//RenderSystemDrawText(20, 10, (std::to_string(deltaTime)).c_str());
+	
+	
+
 	//-----------------------------
 
 	if (isDown) speed = 10; 
@@ -224,113 +224,6 @@ void TestApp::ClearBlocks()
 		*it = new_row;
 }
 
-void TestApp::MainMenu()
-{
-	//MenuInit();
 
-	system("cls");
-
-	// Select
-	int up = 4;
-	int down = 0;
-	if (!isGameActive) down = 1;
-	int selector = down;
-
-	auto UpdateMenu = [&selector, this](int up, int down)
-	{
-		// Render
-		out_Menu(selector, isGameActive);
-
-		// Update
-		char Key = ReadKey();
-
-		switch (Key)
-		{
-		// Arrow down
-		case 'S':
-		{
-			selector++;
-			if (selector > up)
-				selector = down;
-
-			break;
-		}
-		// Arrow up
-		case 'W':
-		{
-			selector--;
-			if (selector < down)
-				selector = up;
-
-			break;
-		}
-		// Enter
-		case 13:
-		{
-			if (selector == 0)	// Continue
-			{
-				isMenuActive = false;
-			}
-			else if (selector == 1)	// New
-			{
-				if (YesNoAsk(newGameAsk))
-				{
-                    isMenuActive = false;
-					//system("cls");
-					isGameActive = true;
-                    std::cout <<"\n--NEW GAME--\n";
-					this->ClearBlocks();
-					this->Run();
-					_getch();
-                }
-			}
-			else if (selector == 2)	// Save/Load
-			{
-				system("cls");
-				std::cout <<"\n--SAVE & LOAD--\n";
-                _getch();
-				system("cls");
-			}
-			else if (selector == 3)	// Statistic
-			{
-                system("cls");
-				std::cout <<"\n--STATISTIC--\n";
-                _getch();
-				system("cls");
-			}
-			else if (selector == 4)	// Exit
-			{
-				if (YesNoAsk(exitAskStr))
-				{
-                    isMenuActive = false;
-					isGameActive = false;
-				}
-			}
-			break;
-		}
-		// Esc
-		case 27:
-			if (isGameActive) isMenuActive = false;	// Cancel
-			else if (YesNoAsk(exitAskStr))
-			{
-				isGameActive = false;
-				isMenuActive = false;
-			}
-			break;
-		}
-	};
-
-	isMenuActive = true;
-	do
-	{
-		UpdateMenu(up, down);
-	} 
-	while (isMenuActive == true);
-
-
-	system("cls");
-
-	//if (isGameActive) Description();
-}
 
 

@@ -1,33 +1,131 @@
 #include "Main_Menu.hpp"
 
-HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+// MainMenu::MainMenu(BaseApp &base)
+// {
 
-//bool isGameActive = false;  // работает ли игра в данный момент
-//bool isGameStart = false;   // была ли начата игра ???
-bool isMenuActive = false;  // включено ли главное меню
+// }
 
-int windowWidth = 28;
-int windowHeight = 24;
+void MainMenu::ShowMenu(bool &isGameActive)
+{
+	//MenuInit();
 
-std::string continueStr = "Continue";
-std::string newGameStr = "New game";
-std::string loadMenuStr = "Save/Load";
-std::string statisticStr = "Records";
-std::string exitStr = "Exit";
+	system("cls");
+
+	// Select
+	int up = 4;
+	int down = 0;
+	if (!isGameActive) down = 1;
+	int selector = down;
+
+	auto UpdateMenu = [&selector, &isGameActive, this](int up, int down)
+	{
+		// Render
+		out_Menu(selector, isGameActive);
+
+		// Update
+		char Key = ReadKey();
+
+		switch (Key)
+		{
+		// Arrow down
+		case 'S':
+		{
+			selector++;
+			if (selector > up)
+				selector = down;
+
+			break;
+		}
+		// Arrow up
+		case 'W':
+		{
+			selector--;
+			if (selector < down)
+				selector = up;
+
+			break;
+		}
+		// Enter
+		case 13:
+		{
+			if (selector == 0)	// Continue
+			{
+				isMenuActive = false;
+			}
+			else if (selector == 1)	// New
+			{
+				if (!isGameActive || YesNoAsk(newGameAsk))
+				{
+                    isMenuActive = false;
+					//system("cls");
+					isGameActive = true;
+                    std::cout <<"\n--NEW GAME--\n";
+					// this->ClearBlocks();
+					// this->Run();
+					//_getch();
+                }
+			}
+			else if (selector == 2)	// Save/Load
+			{
+				system("cls");
+				std::cout <<"\n--SAVE & LOAD--\n";
+                _getch();
+				system("cls");
+			}
+			else if (selector == 3)	// Statistic
+			{
+                system("cls");
+				std::cout <<"\n--STATISTIC--\n";
+                _getch();
+				system("cls");
+			}
+			else if (selector == 4)	// Exit
+			{
+				if (YesNoAsk(exitAskStr))
+				{
+                    isMenuActive = false;
+					isGameActive = false;
+				}
+			}
+			break;
+		}
+		// Esc
+		case 27:
+			if (isGameActive) isMenuActive = false;	// Cancel
+			else if (YesNoAsk(exitAskStr))
+			{
+				isGameActive = false;
+				isMenuActive = false;
+			}
+			break;
+		}
+	};
+
+	isMenuActive = true;
+	do
+	{
+		UpdateMenu(up, down);
+	} 
+	while (isMenuActive == true);
 
 
+	system("cls");
 
-short getPosition(const std::string &str)
+	//if (isGameActive) Description();
+}
+
+
+short MainMenu::getPosition(const std::string &str)
 {
     return static_cast<short>(windowWidth/2 - (str.size()/2 + 2)); // +1
 }
 
-void out_Menu(int selector, bool &isGameActive)
+void MainMenu::out_Menu(int selector, bool &isGameActive)
 {
 	//setlocale(LC_ALL, "Russian");
 	short y = 4;
 
-    auto out_Str = [&y, selector](std::string str, int id)
+    auto out_Str = [&y, selector, this](std::string str, int id)
     {
         SetConsoleCursorPosition(consoleHandle, COORD{ getPosition(str), y });
 
@@ -48,7 +146,7 @@ void out_Menu(int selector, bool &isGameActive)
 
 }
 
-int ReadKey()
+int MainMenu::ReadKey()
 {
 	int inputChar = _getch();
 
@@ -81,7 +179,7 @@ int ReadKey()
 	return inputChar;
 }
 
-bool YesNoAsk(const std::string &question)
+bool MainMenu::YesNoAsk(const std::string &question)
 {
 	bool result = false;
 	bool currentSelect = true;
@@ -90,7 +188,7 @@ bool YesNoAsk(const std::string &question)
 	bool QuestionMenuActive = true;
     short y = 6;    // отступ от верхнего края
 
-    auto out_YesNo = [](bool select)
+    auto out_YesNo = [this](bool select)
     {
         std::string strYes = "Yes";
         std::string strNo = "No";
@@ -155,7 +253,7 @@ bool YesNoAsk(const std::string &question)
 	return result;
 }
 
-void CenterWindow()
+void MainMenu::CenterWindow()
 {
 	HWND consoleWindow = GetConsoleWindow();
 
@@ -177,3 +275,4 @@ void CenterWindow()
 
 	std::cout << "SetWindowPos " << SetWindowPos(consoleWindow, HWND_TOP, x, y, 0, 0, SWP_NOSIZE) << std::endl;
 }
+

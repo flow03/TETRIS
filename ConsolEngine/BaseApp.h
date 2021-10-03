@@ -33,10 +33,10 @@ private:
 	std::vector<std::vector< wchar_t > >screenBuffer;
 	TCHAR  szbuff[255];	// заголовок окна
 	
-
 	void Render();
 
 public:
+	MainMenu menu;
 	int score = 0;
 	bool isGameActive = false;
 
@@ -58,6 +58,9 @@ public:
 	void SetConsoleCursor(int x, int y);
 	//помещает текст в указанной позиции
 	void RenderSystemDrawText(int x, int y, const char *text);
+	void RenderSystemDrawText(int x, int y, std::string text);
+	//рисует количество очков
+	void DrawScore(int x_center, int y);
 
 	/*эта функция вызывается каждую игровую итерацию, её можно переопределить, в наследнике класса.
 	в неё приходит deltaTime - разница во времени между предыдущей итерацией и этой, в секундах*/
@@ -67,5 +70,6 @@ public:
 	будет уже непосредственно код самой клавиши, его можно получить, вызвав метод getch().
 	Метод KeyPressed так же можно переопределить в наследнике*/
 	virtual void KeyPressed (int btnCode){}
+	
 	
 };

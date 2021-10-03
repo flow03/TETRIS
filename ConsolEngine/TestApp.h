@@ -7,7 +7,7 @@
 
 #include "BaseApp.h"
 #include "Shape.h"
-#include "Main_Menu.hpp"
+//#include "Main_Menu.hpp"
 
 class TestApp : public BaseApp
 {
@@ -42,5 +42,5 @@ class TestApp : public BaseApp
 		//int GetScore() const;
 		void DrawShape(Shape * _ptr, wchar_t symbol, COORD c);
 		void ClearBlocks();	// очищает игровое поле
-		void MainMenu();
+		//void MainMenu();
 };

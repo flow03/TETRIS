@@ -1,3 +1,5 @@
+#pragma once
+
 #include <Windows.h>
 //#include <locale>
 #include <iostream>
@@ -5,14 +7,43 @@
 #include <conio.h>
 #include <string>
 
-//#include "BaseApp.h"
+// #include "TestApp.h"
 
-short getPosition(const std::string &str);
+class MainMenu
+{
+public:
+    //MainMenu::MainMenu(BaseApp &base);
 
-void out_Menu(int selector, bool &isGameActive);
+    void ShowMenu(bool &isGameActive);
 
-int ReadKey();
+    void out_Menu(int selector, bool &isGameActive);
 
-bool YesNoAsk(const std::string &question);
+    int ReadKey();
 
-void CenterWindow();
+    bool YesNoAsk(const std::string &question);
+
+    void CenterWindow();
+
+private:
+    short getPosition(const std::string &str);
+
+    HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    //bool isGameActive = false;  // работает ли игра в данный момент
+    //bool isGameStart = false;   // была ли начата игра ???
+    bool isMenuActive = false;  // включено ли главное меню
+
+    int windowWidth = 28;
+    int windowHeight = 24;
+
+    std::string continueStr = "Continue";
+    std::string newGameStr = "New game";
+    std::string loadMenuStr = "Save/Load";
+    std::string statisticStr = "Records";
+    std::string exitStr = "Exit";
+
+    std::string exitAskStr = "Do you want exit?";
+    std::string newGameAsk = "Do you want to start?";
+
+    //TestApp * base;
+};
