@@ -122,6 +122,12 @@ BaseApp::BaseApp(int xSize, int ySize) : X_SIZE(xSize), Y_SIZE(ySize)
 			//backBuffer[x][y] = screenBuffer[x][y];
 		//}
 		}
+
+	//Очищаем заголовок окна
+	TCHAR szbuff[255];
+	for (TCHAR &ch : szbuff) ch = ' ';
+	szbuff[255] = '\0';
+	SetConsoleTitle(szbuff);
 }
 
 BaseApp::~BaseApp()
@@ -208,15 +214,15 @@ void BaseApp::Run()
 
 		sum += deltaTime;
 		//counter++;
-		if (sum >= 1000)
-		{
-			TCHAR  szbuff[255];
-			StringCchPrintf(szbuff, 255, TEXT("CurrentKey: %d"), currentKey);
-			SetConsoleTitle(szbuff);
+		// if (sum >= 1000)
+		// {
+		// 	TCHAR  szbuff[255];
+		// 	StringCchPrintf(szbuff, 255, TEXT("CurrentKey: %d"), currentKey);
+		// 	SetConsoleTitle(szbuff);
 
-			//counter = 0;
-			sum = 0;
-		}
+		// 	//counter = 0;
+		// 	sum = 0;
+		// }
 	}
 
 	std::vector<wchar_t> new_row;

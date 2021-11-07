@@ -37,5 +37,5 @@ class TestApp : public BaseApp
 		Shape * GetRandShape(COORD coord);
 		void CheckBlocks();
 		//int GetScore() const;
-		void TestApp::DrawShape(Shape * _ptr, wchar_t symbol, COORD c);
+		void DrawShape(Shape * _ptr, wchar_t symbol, COORD c);
 };

@@ -1,0 +1,80 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "g++ Build",
+			"command": "D:\\msys64\\mingw64\\bin\\g++.exe",
+			"args": [
+				//"-g",
+				"${fileDirname}\\*.cpp",
+				"-o",
+				"${fileDirname}\\${fileBasenameNoExtension}.exe",
+				//"-std=c++17",
+				"-w"
+			],
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"presentation": {
+				"clear": true
+			},
+			"detail": "компилятор: D:\\msys64\\mingw64\\bin\\g++.exe"
+		},
+		{
+			"type": "cppbuild",
+			"label": "g++ Build object FILE",
+			"command": "D:\\msys64\\mingw64\\bin\\g++.exe",
+			"args": [
+				//"-fdiagnostics-color=always",
+				//"-g",
+				"-c",
+				"${file}",
+				"-o",
+				"${fileDirname}\\obj\\resize\\${fileBasenameNoExtension}.o"
+			],
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build",
+			"detail": "компилятор: D:\\msys64\\mingw64\\bin\\g++.exe"
+		},
+		{
+			"type": "shell",
+			"label": "g++ Build ALL object files",
+			"command": "D:\\msys64\\mingw64\\bin\\g++.exe",
+			"args": [
+				//"-g",
+				"${fileDirname}\\obj\\resize\\*.o",
+				"-o",
+				"${fileDirname}\\\\obj\\resize\\${fileBasenameNoExtension}.exe",
+				//"-std=c++17",
+				//"-w"
+			],
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"presentation": {
+				"clear": true
+			},
+			"detail": "компилятор: D:\\msys64\\mingw64\\bin\\g++.exe"
+		}
+	]
+}
