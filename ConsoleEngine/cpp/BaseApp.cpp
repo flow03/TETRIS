@@ -37,8 +37,8 @@ BaseApp::BaseApp(int xSize, int ySize) : X_SIZE(xSize), Y_SIZE(ySize)
 	// SetCurrentConsoleFontEx(mConsole, TRUE, &fontInfo);
 
 	fontInfo.nFont = 22;
-	fontInfo.dwFontSize.X = 22;
-	fontInfo.dwFontSize.Y = 36;
+	fontInfo.dwFontSize.X = 17;
+	fontInfo.dwFontSize.Y = 28;
 	fontInfo.FontFamily = 54 ; //FF_MODERN;
 	wcscpy_s(fontInfo.FaceName, L"Lucida Console");
 	SetCurrentConsoleFontEx(mConsole, TRUE, &fontInfo);
