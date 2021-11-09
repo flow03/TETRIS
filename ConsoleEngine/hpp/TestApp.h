@@ -4,8 +4,9 @@
 #include <random>
 #include <cassert>
 #include <conio.h>
-#include "BaseApp.h"
-#include "Shape.h"
+
+#include "..\hpp\BaseApp.h"
+#include "..\hpp\Shape.h"
 
 class TestApp : public BaseApp
 {
@@ -37,5 +38,5 @@ class TestApp : public BaseApp
 		Shape * GetRandShape(COORD coord);
 		void CheckBlocks();
 		//int GetScore() const;
-		void DrawShape(Shape * _ptr, wchar_t symbol, COORD c);
+		void DrawShape(Shape * _ptr, COORD c);
 };

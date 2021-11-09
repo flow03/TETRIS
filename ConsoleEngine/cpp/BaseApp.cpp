@@ -1,16 +1,10 @@
-#include "TestApp.h"
-#include <algorithm>
-//#include <time.h>
-#include <conio.h>
-#include <assert.h>
-#include <strsafe.h>
+#include "..\hpp\BaseApp.h"
 
 #define MY_PERFORMENCE_COUNTER
+#include "..\hpp\PerformanceCounter.h"
 
 typedef BOOL(WINAPI *SETCONSOLEFONT)(HANDLE, DWORD); 
 SETCONSOLEFONT SetConsoleFont;
-
-#include "PerformanceCounter.h"
 
 BaseApp::BaseApp(int xSize, int ySize) : X_SIZE(xSize), Y_SIZE(ySize)
 {
@@ -28,17 +22,25 @@ BaseApp::BaseApp(int xSize, int ySize) : X_SIZE(xSize), Y_SIZE(ySize)
 	////if (!SetConsoleFont) { std::cout << "error\n"; exit(1); }  
 	//SetConsoleFont(mConsole, 8);
 	
+	//_setmode(_fileno(stdout), _O_U16TEXT);
 
 	//Размер шрифта
 	CONSOLE_FONT_INFOEX fontInfo;
 	fontInfo.cbSize = sizeof(fontInfo);
 	GetCurrentConsoleFontEx(mConsole, TRUE, &fontInfo);
-	fontInfo.nFont = 6;
-	fontInfo.dwFontSize.X = 12;
-	fontInfo.dwFontSize.Y = 16;
-	fontInfo.FontFamily = FF_MODERN;  //48;
-	//fontInfo.FontWeight = FW_NORMAL; //400
-	wcscpy_s(fontInfo.FaceName, L"Terminal");
+	// fontInfo.nFont = 6;
+	// fontInfo.dwFontSize.X = 12;
+	// fontInfo.dwFontSize.Y = 16;
+	// fontInfo.FontFamily = FF_MODERN;  //48;
+	// //fontInfo.FontWeight = FW_NORMAL; //400
+	// wcscpy_s(fontInfo.FaceName, L"Consolas");
+	// SetCurrentConsoleFontEx(mConsole, TRUE, &fontInfo);
+
+	fontInfo.nFont = 22;
+	fontInfo.dwFontSize.X = 22;
+	fontInfo.dwFontSize.Y = 36;
+	fontInfo.FontFamily = 54 ; //FF_MODERN;
+	wcscpy_s(fontInfo.FaceName, L"Lucida Console");
 	SetCurrentConsoleFontEx(mConsole, TRUE, &fontInfo);
 	
 
@@ -50,11 +52,11 @@ BaseApp::BaseApp(int xSize, int ySize) : X_SIZE(xSize), Y_SIZE(ySize)
 	//А уже потом изменяем значения на нужные нам
 	if(!SetConsoleScreenBufferSize(mConsole,  windowBufSize))
 	{
-		std::cout << "SetConsoleScreenBufferSize failed with error " << GetLastError() << std::endl;
+		std::wcout << "SetConsoleScreenBufferSize failed with error " << GetLastError() << std::endl;
 	}
 	if(!SetConsoleWindowInfo(mConsole, TRUE, &windowSize))
 	{
-		std::cout << "SetConsoleWindowInfo failed with error " << GetLastError() << std::endl;
+		std::wcout << "SetConsoleWindowInfo failed with error " << GetLastError() << std::endl;
 	}
 
 	CONSOLE_CURSOR_INFO cursorInfo;
@@ -124,10 +126,7 @@ BaseApp::BaseApp(int xSize, int ySize) : X_SIZE(xSize), Y_SIZE(ySize)
 		}
 
 	//Очищаем заголовок окна
-	TCHAR szbuff[255];
-	for (TCHAR &ch : szbuff) ch = ' ';
-	szbuff[255] = '\0';
-	SetConsoleTitle(szbuff);
+	SetConsoleTitle((LPCSTR)"");
 }
 
 BaseApp::~BaseApp()
@@ -138,14 +137,14 @@ BaseApp::~BaseApp()
 void BaseApp::SetChar(int x, int y, wchar_t c)
 {
 	//mChiBuffer[x + (X_SIZE + 1)*y].Char.UnicodeChar = c;
-	mChiBuffer[x + (X_SIZE + 1)*y].Char.AsciiChar = c;
+	mChiBuffer[x + (X_SIZE + 1)*y].Char.UnicodeChar = c;
 	mChiBuffer[x + (X_SIZE + 1)*y].Attributes = FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED;
 
 }
 
 wchar_t BaseApp::GetChar(int x, int y)
 {
-	return mChiBuffer[x + (X_SIZE+1)*y].Char.AsciiChar;
+	return mChiBuffer[x + (X_SIZE+1)*y].Char.UnicodeChar;
 }
 
 void BaseApp::SetConsoleCursor(int x, int y)
@@ -172,7 +171,7 @@ void BaseApp::RenderSystemDrawText(int x, int y, const char *text)
 
 void BaseApp::Render()
 {
-	if (!WriteConsoleOutputA(mConsole, mChiBuffer, mDwBufferSize, mDwBufferCoord, &mLpWriteRegion))
+	if (!WriteConsoleOutputW(mConsole, mChiBuffer, mDwBufferSize, mDwBufferCoord, &mLpWriteRegion))
 	{
 		printf("WriteConsoleOutput failed - (%d)\n", GetLastError()); 
 	}
@@ -195,7 +194,7 @@ void BaseApp::Run()
 			currentKey = _getch();
 			KeyPressed (currentKey);
 			if (!FlushConsoleInputBuffer(mConsoleIn))
-				std::cout<<"FlushConsoleInputBuffer failed with error "<<GetLastError();
+				std::wcout<<"FlushConsoleInputBuffer failed with error "<<GetLastError();
 		}
 
 		//UpdateF((float)deltaTime / 1000.0f);

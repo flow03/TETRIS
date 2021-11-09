@@ -3,18 +3,18 @@
 	"tasks": [
 		{
 			"type": "shell",
-			"label": "g++ Build",
+			"label": "g++ Build ALL CPP",
 			"command": "D:\\msys64\\mingw64\\bin\\g++.exe",
 			"args": [
 				//"-g",
-				"${fileDirname}\\*.cpp",
+				"${workspaceFolder}\\ConsoleEngine\\cpp\\*.cpp",
 				"-o",
-				"${fileDirname}\\${fileBasenameNoExtension}.exe",
+				"${workspaceFolder}\\ConsoleEngine\\${workspaceFolderBasename}.exe",
 				//"-std=c++17",
 				"-w"
 			],
 			"options": {
-				"cwd": "${fileDirname}"
+				"cwd": "${workspaceFolder}\\ConsoleEngine\\cpp\\"
 			},
 			"problemMatcher": [
 				"$gcc"
@@ -26,7 +26,7 @@
 			"presentation": {
 				"clear": true
 			},
-			"detail": "компилятор: D:\\msys64\\mingw64\\bin\\g++.exe"
+			"detail": "compiler: D:\\msys64\\mingw64\\bin\\g++.exe"
 		},
 		{
 			"type": "cppbuild",
@@ -38,7 +38,8 @@
 				"-c",
 				"${file}",
 				"-o",
-				"${fileDirname}\\obj\\resize\\${fileBasenameNoExtension}.o"
+				"${workspaceFolder}\\ConsoleEngine\\resize_obj\\${fileBasenameNoExtension}.o",
+				//"-w"
 			],
 			"options": {
 				"cwd": "${fileDirname}"
@@ -47,7 +48,7 @@
 				"$gcc"
 			],
 			"group": "build",
-			"detail": "компилятор: D:\\msys64\\mingw64\\bin\\g++.exe"
+			"detail": "compiler: D:\\msys64\\mingw64\\bin\\g++.exe"
 		},
 		{
 			"type": "shell",
@@ -55,11 +56,36 @@
 			"command": "D:\\msys64\\mingw64\\bin\\g++.exe",
 			"args": [
 				//"-g",
-				"${fileDirname}\\obj\\resize\\*.o",
+				"${workspaceFolder}\\ConsoleEngine\\resize_obj\\*.o",
 				"-o",
-				"${fileDirname}\\\\obj\\resize\\${fileBasenameNoExtension}.exe",
+				"${workspaceFolder}\\ConsoleEngine\\resize_obj\\${workspaceFolderBasename}.exe",
 				//"-std=c++17",
 				//"-w"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}\\ConsoleEngine\\resize_obj\\"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"presentation": {
+				"clear": true
+			},
+			"detail": "compiler D:\\msys64\\mingw64\\bin\\g++.exe"
+		},
+		{
+			"type": "shell",
+			"label": "g++ Build FILE and ALL object files",
+			"command": "D:\\msys64\\mingw64\\bin\\g++.exe",
+			"args": [
+				"${file}",
+				"${workspaceFolder}\\ConsoleEngine\\resize_obj\\*.o",
+				"-o",
+				"${workspaceFolder}\\ConsoleEngine\\resize_obj\\${workspaceFolderBasename}.exe",
 			],
 			"options": {
 				"cwd": "${fileDirname}"
@@ -74,7 +100,8 @@
 			"presentation": {
 				"clear": true
 			},
-			"detail": "компилятор: D:\\msys64\\mingw64\\bin\\g++.exe"
+			"detail": "compiler: D:\\msys64\\mingw64\\bin\\g++.exe"
 		}
+		
 	]
 }

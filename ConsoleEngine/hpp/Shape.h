@@ -1,8 +1,7 @@
 #pragma once
 
 #include <Windows.h>
-#include "BaseApp.h"
-
+#include "..\hpp\BaseApp.h"
 
 class Shape 
 {
@@ -10,9 +9,9 @@ public:
 	//мен¤ет положение фигуры
 	virtual void changePosition(BaseApp &base) = 0;
 	//–исует фигуру указанным символом по еЄ фактическим координатам
-	void SetShape(BaseApp &base, wchar_t symbol);
+	void SetShape(BaseApp &base, wchar_t symbol = s);
 	//–исует фигуру указанным символом в указанной точке
-	void SetShape(BaseApp &base, wchar_t symbol, COORD c_);
+	void SetShape(BaseApp &base, COORD c_, wchar_t symbol = s);
 	//провер¤ет новую позицию на пустые символы
 	bool checkPosition(COORD new_a, COORD new_b, COORD new_c, COORD new_d, BaseApp &base) const;
 	//провер¤ет текущую позицию 
@@ -30,6 +29,8 @@ protected:
 	COORD d;
 
 	int position = 0; 
+	//symbol
+	static const wchar_t s = L'\x25d9';
 };
 
 class Quadrate : public Shape

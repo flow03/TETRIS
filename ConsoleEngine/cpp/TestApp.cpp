@@ -1,6 +1,4 @@
-#include "TestApp.h"
-
-
+#include "..\hpp\TestApp.h"
 
 TestApp::TestApp() : Parent(28, 24)
 {
@@ -18,12 +16,12 @@ TestApp::TestApp() : Parent(28, 24)
 		*it = new_row;
 }
 
-void TestApp::DrawShape(Shape * _ptr, wchar_t symbol, COORD c) {
+void TestApp::DrawShape(Shape * _ptr, COORD c) {
 	for (int y = c.Y - 2; y <= c.Y + 3; ++y)
 		for (int x = c.X - 2; x <= c.X + 2; ++x)
 			SetChar(x, y, L' ');
 
-	_ptr->SetShape(*this, symbol, c);
+	_ptr->SetShape(*this, c);
 }
 
 //int TestApp::GetScore() const { return score; }
@@ -152,13 +150,13 @@ void TestApp::KeyPressed(int btnCode)
 			shape_ptr->changePosition(*this);
 
 			//перерисовываем текущую фигуру
-			DrawShape(shape_ptr, 10, COORD{ 22, 13 });
+			DrawShape(shape_ptr, COORD{ 22, 13 });
 		}
 		break;
 	case 27:  //Esc
 	case 32:  //Space
 		SetConsoleCursor(7, 10);
-		std::cout << "PAUSE";
+		std::wcout << L"PAUSE";
 		int temp = 0;
 		do temp = _getch();
 		while ((temp != 32) && (temp != 27));
@@ -176,7 +174,7 @@ void TestApp::UpdateF(float deltaTime)
 		next_shape_ptr = GetRandShape(COORD{ 8 , 2 });
 
 		//рисуем следующую фигуру
-		DrawShape(next_shape_ptr, 10, COORD{ 22, 6 });
+		DrawShape(next_shape_ptr, COORD{ 22, 6 });
 	}
 
 	if (!isShape)
@@ -189,11 +187,11 @@ void TestApp::UpdateF(float deltaTime)
 		isShape = true;
 
 		//рисуем текущую фигуру
-		DrawShape(shape_ptr, 10, COORD{ 22, 13 });
+		DrawShape(shape_ptr, COORD{ 22, 13 });
 	}
 
 	if (shape_ptr)
-	shape_ptr->SetShape(*this, 10);
+	shape_ptr->SetShape(*this);
 
 	//-----------------------------
 
@@ -219,14 +217,14 @@ void TestApp::UpdateF(float deltaTime)
 		{
 			isDown = false;
 			isShape = false;
-			shape_ptr->SetShape(*this, 10);
+			shape_ptr->SetShape(*this);
 			CheckBlocks();
 
 			//завершает главный цикл игры
 			if (next_shape_ptr && !(next_shape_ptr->checkPosition(*this))) 
 				isGameActive = false;
 		}
-		else shape_ptr->SetShape(*this, 10);
+		else shape_ptr->SetShape(*this);
 		sum = 0;
 	}
 }

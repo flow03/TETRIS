@@ -264,3 +264,5 @@ __pycache__/
 *.rar
 *.jpg
 *.png
+# object files
+*.o

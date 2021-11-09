@@ -1,4 +1,4 @@
-#include "Shape.h"
+#include "..\hpp\Shape.h"
 
 //-------------Shape-----------------
 
@@ -9,7 +9,7 @@ void Shape::SetShape(BaseApp &base, wchar_t symbol) {
 	base.SetChar(d.X, d.Y, symbol);
 }
 
-void Shape::SetShape(BaseApp &base, wchar_t symbol, COORD c_) {
+void Shape::SetShape(BaseApp &base, COORD c_, wchar_t symbol) {
 	short x_diff = c_.X - b.X;
 	short y_diff = c_.Y - b.Y;
 

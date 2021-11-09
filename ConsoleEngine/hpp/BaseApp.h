@@ -4,8 +4,15 @@
 #include <Windows.h>
 #include <vector>
 #include <string>
+// #include <io.h>
+// #include <fcntl.h>
 
-//using namespace std;
+#include <algorithm>
+//#include <time.h>
+#include <conio.h>
+#include <assert.h>
+#include <strsafe.h>
+
 
 class BaseApp
 {
@@ -20,13 +27,13 @@ private:
 
 	//30, 31, 16, 17
 	//up_rows
-	const wchar_t u = 30;
+	const wchar_t u = L'\x25b2';
 	//down rows
-	const wchar_t d = 31;
+	const wchar_t d = L'\x25bc';
 	//left rows
-	const wchar_t l = 17;
+	const wchar_t l = L'\x25c4';
 	//right rows
-	const wchar_t r = 16;
+	const wchar_t r = L'\x25ba';
 
 	std::vector<std::vector< wchar_t > >screenBuffer;
 	
@@ -36,6 +43,9 @@ private:
 public:
 	int score = 0;
 	bool isGameActive = true;
+
+	//symbol
+	//const wchar_t s = L'\x25d8';
 
 	//размеры области вывода по горизонтали и вертикали в символах
 	const int X_SIZE;
